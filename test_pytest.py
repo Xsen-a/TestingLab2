@@ -41,6 +41,7 @@ class TestPrimeGenerator:
         assert PrimeGenerator.is_prime(7) is True
         assert PrimeGenerator.is_prime(4) is False
         assert PrimeGenerator.is_prime(1) is False
+        assert PrimeGenerator.is_prime(2) is True
 
     def test_is_prime_negative(self):
         assert PrimeGenerator.is_prime(-5) is False
