@@ -31,12 +31,12 @@ jobs:
       run: |
         pytest tests_pytest.py
 
-#    - name: Upload coverage to Coveralls
-#      run: |
-#        coveralls
-#      env:
-#        COVERALLS_REPO_TOKEN: ${{ secrets.coveralls_token }}
-#
+    - name: Upload coverage to Coveralls
+      run: |
+        coveralls
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.coveralls_token }}
+
 #  sonarcloud:
 #    runs-on: ubuntu-latest
 #    steps:
