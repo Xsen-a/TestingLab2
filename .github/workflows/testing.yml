@@ -26,15 +26,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
         pip install pytest pytest-cov coveralls
-        pip install coverage
 
     - name: Run tests
       run: |
-        pytest tests_pytest.py
+        coverage run -m pytest
+        coverage report  
+        coverage xml    
 
     - name: Upload coverage to Coveralls
       run: |
-        coverage run -m pytest
         coveralls
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.coveralls_token }}
