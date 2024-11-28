@@ -69,7 +69,6 @@ class PrimeGenerator:
     def gen_simple_numbers(min_border, max_border):
         if min_border == max_border:
             raise Exception("Границы для генерации простых чисел не должны быть равны.")
-        print(min_border, max_border)
 
         while True:
             p = random.randint(min_border, max_border)
@@ -82,6 +81,13 @@ class PrimeGenerator:
 
 class RSA:
     def execute(self, message_str):
+
+        if not message_str.isdigit():
+            raise Exception("Ваше расшифрованное сообщение состоит не только из цифр.")
+
+        if int(message_str) > 33554432:
+            raise ValueError("Ваше сообщение слишком длинное (> 33554432), могут возникнуть ошибки.")
+
         # Ограничение разрядности псевдослучайного числа
         min_border = MathUtilities.power_number(2, 12)
         max_border = MathUtilities.power_number(2, 13)
@@ -123,7 +129,6 @@ class RSA:
 
         return message_decode
 
-
     def generate_e(self, Fi):
         if Fi == 0:
             raise Exception("Функция Эйлера не может быть равна 0.")
@@ -135,15 +140,8 @@ class RSA:
 
 
 def main():
-    rsa = RSA()
     message_str = input("Введите ваше сообщение из цифр: ")
-
-    if not message_str.isdigit():
-        raise Exception("Ваше расшифрованное сообщение состоит не только из цифр.")
-
-    if int(message_str) > 33554432:
-        raise Exception("Ваше сообщение слишком длинное (> 33554432), могут возникнуть ошибки.")
-
+    rsa = RSA()
     message_decode = rsa.execute(message_str)
     print(f"Ваше расшифрованное сообщение: {message_decode}")
 
