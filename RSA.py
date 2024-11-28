@@ -4,6 +4,9 @@ import random
 class MathUtilities:
     @staticmethod
     def power_number(base_number, exponent):
+        if exponent < 0:
+            raise ValueError("Показатель степени не может быть отрицательным.")
+
         result = 1
         while exponent > 0:
             if (exponent & 1) == 1:
@@ -15,6 +18,9 @@ class MathUtilities:
 
     @staticmethod
     def power_number_module(base_num, exponent, module):
+        if module == 0:
+            raise ZeroDivisionError("Модуль не может быть равным нулю.")
+
         result = 1
         base_num = base_num % module
 
@@ -27,6 +33,8 @@ class MathUtilities:
 
     @staticmethod
     def gcd(a, b):
+        if b == 0 and a == 0:
+            raise ZeroDivisionError("Числа a и b не могут быть отрицательными.")
         while b:
             a, b = b, a % b
         return a
@@ -59,6 +67,10 @@ class PrimeGenerator:
 
     @staticmethod
     def gen_simple_numbers(min_border, max_border):
+        if min_border == max_border:
+            raise Exception("Границы для генерации простых чисел не должны быть равны.")
+        print(min_border, max_border)
+
         while True:
             p = random.randint(min_border, max_border)
             if PrimeGenerator.is_prime(p):
@@ -75,8 +87,6 @@ class RSA:
         max_border = MathUtilities.power_number(2, 13)
 
         big_integers = PrimeGenerator.gen_simple_numbers(min_border, max_border)
-        # Заменяем p и q на заданные значения
-        # big_integers = (1957155017, 1029033847)
         print(f"p: {big_integers[0]}")
         print(f"q: {big_integers[1]}\n")
 
@@ -113,7 +123,11 @@ class RSA:
 
         return message_decode
 
+
     def generate_e(self, Fi):
+        if Fi == 0:
+            raise Exception("Функция Эйлера не может быть равна 0.")
+
         e = random.randint(3, 1000)
         while MathUtilities.gcd(e, Fi) != 1:
             e += 1
@@ -124,11 +138,14 @@ def main():
     rsa = RSA()
     message_str = input("Введите ваше сообщение из цифр: ")
 
-    if message_str.isdigit():
-        message_decode = rsa.execute(message_str)
-        print(f"Ваше расшифрованное сообщение: {message_decode}")
-    else:
-        print("Ваше расшифрованное сообщение состоит не только из цифр.")
+    if not message_str.isdigit():
+        raise Exception("Ваше расшифрованное сообщение состоит не только из цифр.")
+
+    if int(message_str) > 33554432:
+        raise Exception("Ваше сообщение слишком длинное (> 33554432), могут возникнуть ошибки.")
+
+    message_decode = rsa.execute(message_str)
+    print(f"Ваше расшифрованное сообщение: {message_decode}")
 
 
 if __name__ == "__main__":
