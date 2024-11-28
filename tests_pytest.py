@@ -1,7 +1,7 @@
 import re
 
 import pytest
-from RSA import MathUtilities, PrimeGenerator, RSA
+from main import MathUtilities, PrimeGenerator, RSA
 
 
 class TestMathUtilities:
